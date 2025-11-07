@@ -33,11 +33,24 @@ export function SignupForm({
           <Input id="email" type="email" placeholder="ameer@techminds.com" required />
         </Field>
         <Field>
-          <FieldLabel htmlFor="password">Password</FieldLabel>
+          <FieldLabel htmlFor="employeeId">Employee ID</FieldLabel>
+          <Input id="id" type="id" placeholder="5434321" required />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="phone">Contact Number</FieldLabel>
+          <Input id="phone" type="number" placeholder="+91 9049122622" required />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <Input id="email" type="text" placeholder="ameer@techminds.com" required />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="email">Region</FieldLabel>
+          <Input id="region" type="text" placeholder="Pune (INDIA-WEST)" required />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="email">Password</FieldLabel>
           <Input id="password" type="password" placeholder="ameer@123" required />
-          <FieldDescription>
-            Must be at least 8 characters long.
-          </FieldDescription>
         </Field>
         <Field>
           <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
@@ -56,7 +69,6 @@ export function SignupForm({
               </div>
             </Button>
           </Link>
-          
         </Field>
       </FieldGroup>
     </form>

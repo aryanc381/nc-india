@@ -10,7 +10,7 @@ export default function Home() {
         <ModeToggle />
       </div>
       <div className="mt-[10vw]">
-        <LoginPage />
+        {/* <LoginPage /> */}
       </div>
     </div>
   );
