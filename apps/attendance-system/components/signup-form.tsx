@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Link from "next/link";
+import RegionMenu from "./dropdown";
 
 export function SignupForm({
   className,
@@ -46,7 +47,7 @@ export function SignupForm({
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Region</FieldLabel>
-          <Input id="region" type="text" placeholder="Pune (INDIA-WEST)" required />
+          <RegionMenu />
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Password</FieldLabel>
