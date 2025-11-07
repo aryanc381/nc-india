@@ -35,7 +35,7 @@ export default function RegionMenu() {
                 <DropdownMenuTrigger>
                     <Button variant={"outline"}>Select Region</Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="ml-[10vw] h-[40vw] overflow-y">
+                <DropdownMenuContent className="ml-[10vw] w-[60vw] h-[40vw] overflow-y">
                     {regionInfo.map((item) => (
                         <div key={item.zone}>
                             <DropdownMenuLabel>{item.zone}</DropdownMenuLabel>

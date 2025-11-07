@@ -54,10 +54,6 @@ export function SignupForm({
           <Input id="password" type="password" placeholder="ameer@123" required />
         </Field>
         <Field>
-          <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
-          <Input id="confirm-password" type="password" required />
-        </Field>
-        <Field>
           <Button type="submit">Create Account</Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
