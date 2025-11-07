@@ -16,7 +16,7 @@ export function ModeToggle() {
   return (
     <div className="flex justify-center w-full  rounded-sm pl-[3vw] p-[3vw]">
       <div className="mt-[1vw]">
-        {theme === 'dark' ? <img src="./ncDark.png" alt="" className="w-[40vw] h-[auto]" /> : <img className="w-[40vw] h-[auto]" src={"./ncLight.png"} />}
+        {theme === 'system' ? <img src="./ncDark.png" alt="" className="w-[40vw] h-[auto]" /> : <img className="w-[40vw] h-[auto]" src={"./ncLight.png"} />}
       </div>
       <div className="fixed z-10 bottom-0 right-0 mr-[3vw] mb-[3vw]">
         <DropdownMenu>
@@ -31,7 +31,7 @@ export function ModeToggle() {
             <DropdownMenuItem onClick={() => setTheme("light")}>
             Light
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
             Dark
             </DropdownMenuItem>
         </DropdownMenuContent>
