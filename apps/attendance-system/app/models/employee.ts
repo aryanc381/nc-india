@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
+import { IEmployee } from '../types/employeeT';
 
-const employeeSchema = new Schema({
+const employeeSchema = new Schema<IEmployee>({
     employeeInformation: {
             name: {
             type: String,
@@ -70,6 +71,7 @@ const employeeSchema = new Schema({
                 default: ""
             }
         }]
-    }
-    
-})
+    }  
+});
+
+export const Employee = model<IEmployee>("NC-Employees", employeeSchema);
