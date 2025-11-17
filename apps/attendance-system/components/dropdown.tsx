@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
+import { useEmployeeInfoStore } from "@/app/store/employeeStore";
 
 interface Menu {
     zone: string;
@@ -28,7 +29,8 @@ const regionInfo: Menu[] = [
 ]
 
 export default function RegionMenu() {
-    const [option, setOption] = useState('');
+    const employee = useEmployeeInfoStore((state) => state.employee);
+    const updateInfo = useEmployeeInfoStore((state) => state.updateInfo);
     return(
         <div className="flex">
             <DropdownMenu>
@@ -41,7 +43,7 @@ export default function RegionMenu() {
                             <DropdownMenuLabel>{item.zone}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {item.department.map((data) => (
-                                <DropdownMenuItem key={data} onClick={() => setOption(data)}>{data}</DropdownMenuItem>
+                                <DropdownMenuItem key={data} onClick={() => updateInfo("region", {zone: item.zone, city: data})}>{data}</DropdownMenuItem>
                             ))}
                         </div>
                     ))}

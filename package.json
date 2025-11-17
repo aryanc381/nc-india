@@ -22,6 +22,8 @@
     "packages/*"
   ],
   "dependencies": {
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "zustand": "^5.0.8",
+    "zustand-computed": "^2.1.1"
   }
 }

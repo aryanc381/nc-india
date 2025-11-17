@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { model, models, Schema } from 'mongoose';
 import { IEmployee } from '../types/employeeT';
 
 const employeeSchema = new Schema<IEmployee>({
@@ -74,4 +74,4 @@ const employeeSchema = new Schema<IEmployee>({
     }  
 });
 
-export const Employee = model<IEmployee>("NC-Employees", employeeSchema);
+export const Employee = models.Employee || model<IEmployee>("NCEmployees", employeeSchema);

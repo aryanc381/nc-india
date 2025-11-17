@@ -11,11 +11,15 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link";
 import RegionMenu from "./dropdown";
+import { useEmployeeInfoStore } from "@/app/store/employeeStore";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const employee = useEmployeeInfoStore((state) => state.employee);
+  const updateInfo = useEmployeeInfoStore((state) => state.updateInfo);
+
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <FieldGroup>
@@ -27,31 +31,27 @@ export function SignupForm({
         </div>
         <Field>
           <FieldLabel htmlFor="name">Full Name</FieldLabel>
-          <Input id="name" type="text" placeholder="Ameer Mokashi" required />
+          <Input value={employee.employeeInformation.name} onChange={(e) => {updateInfo("name", e.target.value)}} id="name" type="text" placeholder="Ameer Mokashi" required />
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="ameer@techminds.com" required />
+          <Input value={employee.employeeInformation.email} onChange={(e) => {updateInfo("email", e.target.value)}} id="email" type="email" placeholder="ameer@techminds.com" required />
         </Field>
         <Field>
           <FieldLabel htmlFor="employeeId">Employee ID</FieldLabel>
-          <Input id="id" type="id" placeholder="5434321" required />
+          <Input value={employee.employeeInformation.employeeID ?? ""} onChange={(e) => {const value = e.target.value; updateInfo("employeeID", value === "" ? null : Number(value));}} id="id" type="number" placeholder="5434321" required />
         </Field>
         <Field>
           <FieldLabel htmlFor="phone">Contact Number</FieldLabel>
-          <Input id="phone" type="number" placeholder="+91 9049122622" required />
+          <Input value={employee.employeeInformation.contact.cNumber ?? ""} onChange={(e) => {const value = e.target.value; updateInfo("contact", {...employee.employeeInformation.contact, cNumber: value === "" ? null : Number(value)});}} id="phone" type="number" placeholder="+91 9049122622" required />
         </Field>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="text" placeholder="ameer@techminds.com" required />
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="email">Region</FieldLabel>
+          <FieldLabel htmlFor="region">Region</FieldLabel>
           <RegionMenu />
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Password</FieldLabel>
-          <Input id="password" type="password" placeholder="ameer@123" required />
+          <Input value={employee.employeeInformation.password} onChange={(e) => {updateInfo("password", e.target.value)}} id="password" type="password" placeholder="ameer@123" required />
         </Field>
         <Field>
           <Button type="submit">Create Account</Button>
