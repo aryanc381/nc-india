@@ -6,21 +6,50 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+
 import {
   Field,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import Navbar from "./navbar"
-import { useNavigate } from "react-router-dom"
+} from "@/components/ui/field";
+
+import { Input } from "@/components/ui/input";
+import Navbar from "./navbar";
+import { useNavigate } from "react-router-dom";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+
+interface regionProps {
+  zone: string;
+  location: string[];
+}
+
+const regionArr: regionProps[] = [
+  {zone: '| INDIA-WEST', location: ['Baner, Pune', 'Sadashiv Peth, Pune',]},
+  {zone: '| INDIA-NORTH', location: ['Haryana, Delhi', 'Sadashiv Peth, Pune']}
+]
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [phone, setPhone] = useState('');
+  const [id, setId] = useState('');
+  const [region, setRegion] = useState('');
+  const [office, setOffice] = useState('');
   return (
     <div className={cn("flex flex-col gap-[5vw]", className)} {...props}>
       <Navbar />
@@ -36,35 +65,55 @@ export function SignupForm({
                 
                 <Field>
                   <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                  <Input id="name" type="text" placeholder="Aryan Chauhan" required className="rounded-[1vw]" />
+                  <Input value={name} onChange={(e) => {setName(e.target.value)}} id="name" type="text" placeholder="Aryan Chauhan" required className="rounded-[1vw]" />
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="employeeID">Employee ID</FieldLabel>
-                  <Input id="id" type="employeeID" placeholder="5434321" required className="rounded-[1vw]" />
+                  <Input value={id} onChange={(e) => {setId(e.target.value)}} id="id" type="employeeID" placeholder="5434321" required className="rounded-[1vw]" />
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="email">Email</FieldLabel>
-                  <Input id="email" type="email" placeholder="aryan@ncomputing.com" required className="rounded-[1vw]" />
+                  <Input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" type="email" placeholder="aryan@ncomputing.com" required className="rounded-[1vw]" />
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="contact">Contact Number</FieldLabel>
-                  <Input id="contact" type="contact" placeholder="+91 9049122622" required className="rounded-[1vw]" />
+                  <Input value={phone} onChange={(e) => {setPhone(e.target.value)}} id="contact" type="contact" placeholder="+91 9049122622" required className="rounded-[1vw]" />
                 </Field>
                 
                 <Field>
                   <div className="flex items-center">
                     <FieldLabel htmlFor="password">Password</FieldLabel>
                   </div>
-                  <Input id="password" type="password" placeholder="************************" required className="rounded-[1vw]" />
+                  <Input value={pass} onChange={(e) => {setPass(e.target.value)}} id="password" type="password" placeholder="************************" required className="rounded-[1vw]" />
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="region">Region</FieldLabel>
-                  <Input id="email" type="email" placeholder="aryan@ncomputing.com" required className="rounded-[1vw]" />
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <div className="flex">
+                        <Button variant={'outline'} className="rounded-[1vw]">{office || "Select your location"} {" "} {region}</Button>
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {regionArr.map((r) => (
+                        <div key={r.zone}>
+                          <DropdownMenuLabel onClick={() => { setRegion(r.zone); setOffice(""); }}>{r.zone}</DropdownMenuLabel>
+                          {r.location.map((loc) => (
+                            <DropdownMenuItem onClick={() => {setOffice(loc); setRegion(r.zone)}} key={loc}>
+                              {loc}
+                            </DropdownMenuItem>
+                          ))}
+                          <DropdownMenuSeparator />
+                        </div>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </Field>
+
                 <Field>
                   <Button type="submit" className="rounded-[1vw] mt-[4vw]">Signup</Button>
                   <Button onClick={() => {navigate('/')}} variant="outline" type="button" className="rounded-[1vw]">Login instead</Button>
