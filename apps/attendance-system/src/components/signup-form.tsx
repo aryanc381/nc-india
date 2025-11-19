@@ -28,6 +28,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
+import axios from 'axios';
+import { toast } from "sonner";
+
 interface regionProps {
   zone: string;
   location: string[];
@@ -50,6 +53,50 @@ export function SignupForm({
   const [id, setId] = useState('');
   const [region, setRegion] = useState('');
   const [office, setOffice] = useState('');
+
+  const singupHandler = async() => {
+    if(!name || !email || !pass || !phone || !id || !region || !office) {
+      toast.warning('Missing credentials.');
+      return;
+    }
+
+    toast.promise(() => 
+      axios({
+        url: 'http://192.168.10.72:5000/v1/api/auth/signup',
+        method: 'POST',
+        data: {
+          name: name,
+          email: email,
+          password: pass,
+          id: id,
+          phone: phone,
+          location: {
+            office: office,
+            region: region
+          }
+        }
+      }),
+      {
+        loading: 'Signup initiated...',
+        success: (res) => {
+          const status = res.data.status;
+          if(status === 403) { 
+            return res.data.msg;
+          } else if (status === 500) { 
+            return res.data.msg;
+          } else if (status === 201) {
+            return res.data.msg
+          } else { 
+            return 'Backend Live but unavailable'
+          }
+        },
+        error: () => {
+          return 'Backend dow, contact admin';
+        },
+      }
+      
+    );
+  }
   return (
     <div className={cn("flex flex-col gap-[5vw]", className)} {...props}>
       <Navbar />
@@ -93,7 +140,7 @@ export function SignupForm({
                 <Field>
                   <FieldLabel htmlFor="region">Region</FieldLabel>
                   <DropdownMenu>
-                    <DropdownMenuTrigger>
+                    <DropdownMenuTrigger asChild>
                       <div className="flex">
                         <Button variant={'outline'} className="rounded-[1vw]">{office || "Select your location"} {" "} {region}</Button>
                       </div>
@@ -115,7 +162,7 @@ export function SignupForm({
                 </Field>
 
                 <Field>
-                  <Button type="submit" className="rounded-[1vw] mt-[4vw]">Signup</Button>
+                  <Button type="button" className="rounded-[1vw] mt-[4vw]" onClick={singupHandler}>Signup</Button>
                   <Button onClick={() => {navigate('/')}} variant="outline" type="button" className="rounded-[1vw]">Login instead</Button>
                   <div className="flex text-gray-500 text-[3.5vw] text-center mt-[2vw]">
                     <p className="mr-[1vw]">If you have forgotten password, please</p>
