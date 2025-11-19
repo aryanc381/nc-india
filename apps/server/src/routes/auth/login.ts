@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
         if(!isMatch) {
             return res.json({
                 status: 401,
-                msg: 'Invalid password for ' + existing.basicDetails.email + '.'
+                msg: 'Invalid password for ' + existing.basicDetails.email
             });
         }
 

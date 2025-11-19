@@ -85,7 +85,7 @@ export function SignupForm({
           } else if (status === 500) { 
             return res.data.msg;
           } else if (status === 201) {
-            setTimeout(() => {navigate('/login')}, 3000);
+            setTimeout(() => {navigate('/face-reg')}, 3000);
             return res.data.msg
           } else { 
             return 'Backend Live but unavailable.'
