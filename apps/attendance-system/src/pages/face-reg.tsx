@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { useRef, useEffect, useState } from "react";
+import axios from 'axios';
 
 function FaceReg() {
   return (
@@ -39,6 +40,7 @@ const Face = () => {
     const [flash, setFlash] = useState(false);
     const [captureStep, setCaptureStep] = useState<1 | 2 | 3>(1);
     const [photos, setPhotos] = useState<string[]>([]);
+    const [respo, setResp] = useState<any>(null);
 
     const getVid = () => {
         navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1000 }})
@@ -47,7 +49,9 @@ const Face = () => {
             if(!video) return;
             
             video.srcObject = stream;
-            video.play();
+            video.onloadedmetadata =() => {
+                video.play();
+            }
         })
         .catch(err => {
             console.error(err);
@@ -55,7 +59,7 @@ const Face = () => {
     }
 
     const takePhoto = () => {
-        const width = 414;
+        const width = 256;
         const height = width / (9/16);
 
         let video = videoRef.current;
@@ -72,7 +76,7 @@ const Face = () => {
         if(!ctx || !video) return;
         ctx.drawImage(video, 0, 0, width, height);
 
-        const dataUrl = photo.toDataURL('image/png');
+        const dataUrl = photo.toDataURL('image/png', 0.92);
         setPhotos((prev) => [...prev, dataUrl]);
         
         if(captureStep < 3) {
@@ -81,6 +85,23 @@ const Face = () => {
             setHasPhoto(true);
         }
     }
+
+    const submitFace = async() => {
+        try {
+            const resp = await axios({
+                url: 'https://66200a8d180d.ngrok-free.app/v1/api/face/register',
+                method: 'POST',
+                data: {
+                    photos: photos,
+                    userId: '001'
+                }
+            })
+            setResp(resp);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         getVid();
     }, []);
@@ -136,8 +157,9 @@ const Face = () => {
                                     <DialogTitle>Face-ID Confirmation</DialogTitle>
                                     <DialogDescription>
                                     <div className="text-center">
+                                        <p>{respo?.data?.msg}</p>
                                         <p>This facial capture will be used to generate your biometric authentication profile.</p>
-                                        <div className="flex gap-[4vw] overflow-x-scroll h-[90vw]">
+                                        <div className="flex gap-[4vw] overflow-x-scroll h-full">
                                             {photos.map((p, i) => (
                                                 <img key={i} src={p} className="h-[80vw] rounded-md border" />
                                             ))}
@@ -146,7 +168,7 @@ const Face = () => {
                                     <DialogClose asChild className="mt-[10vw]">
                                         <div className="flex justify-center gap-[3vw]">
                                             <Button variant="outline" className="bg-red-500 text-white" onClick={resetCapture}>Retake FaceID</Button>
-                                            <Button variant="default" className="bg-green-500">Submit FaceID</Button>
+                                            <Button variant="default" className="bg-green-500" onClick={submitFace}>Submit FaceID</Button>
                                         </div>
                                     </DialogClose>
                                     </DialogDescription>

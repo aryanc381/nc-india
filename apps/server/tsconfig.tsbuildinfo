@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/models/employeeschema.ts","./src/routes/root.ts","./src/routes/auth/login.ts","./src/routes/auth/signup.ts","./src/types/employeet.ts"],"version":"5.9.2"}
+{"root":["./src/index.ts","./src/models/employeeschema.ts","./src/routes/root.ts","./src/routes/auth/login.ts","./src/routes/auth/signup.ts","./src/routes/face/register.ts","./src/types/employeet.ts"],"version":"5.9.2"}
