@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
             const formattedErrors = parsed.error.issues.map((err) => ({ path: err.path[0], msg: err.message }));
             return res.json({
                 status: 403, 
-                msg: 'Invalid / Missing credentials',
+                msg: 'Invalid Credentials format, check your Email-ID.',
                 err: formattedErrors
             });
         }
@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
         if(!isMatch) {
             return res.json({
                 status: 401,
-                msg: 'Invalid email / password.'
+                msg: 'Invalid password for ' + existing.basicDetails.email + '.'
             });
         }
 

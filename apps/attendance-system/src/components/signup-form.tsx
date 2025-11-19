@@ -88,14 +88,13 @@ export function SignupForm({
             setTimeout(() => {navigate('/login')}, 3000);
             return res.data.msg
           } else { 
-            return 'Backend Live but unavailable'
+            return 'Backend Live but unavailable.'
           }
         },
         error: () => {
-          return 'Backend dow, contact admin';
+          return 'Backend Unavailable, contact admin.';
         },
       }
-      
     );
   }
   return (
